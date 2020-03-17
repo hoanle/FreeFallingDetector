@@ -27,7 +27,7 @@ class FreeFallingSdk {
         const val SHOULD_CHECK_IF_MONITORING_SERVICE_RUNNING = "falling.detector.should.check.monitoring.service.running"
 
         private var INSTANCE: FreeFallingSdk? = null
-        var created = false;
+        private var created = false;
 
         fun getInstance(): FreeFallingSdk {
 
@@ -94,6 +94,7 @@ class FreeFallingSdk {
         LocalBroadcastManager.getInstance(context).sendBroadcastSync(
             Intent(SHOULD_START_SERVICE_BACKGROUND)
         )
+        created = true
     }
 
     /**
@@ -114,7 +115,6 @@ class FreeFallingSdk {
             echoToExternal
         )
         FreeFallingNotificationUlti.registerNotificationChannel(context)
-        created = true
     }
 
     /**
@@ -173,6 +173,6 @@ class FreeFallingSdk {
      * Make sure all settings are correctly setup
      */
     private fun assertSdkCreated() {
-        if (created) throw AssertionError("startService must be called first");
+        if (!created) throw AssertionError("startService must be called first");
     }
 }

@@ -3,7 +3,6 @@ package com.whoisyari.freefallingdetectorlibrary.data.repo
 import android.util.Log
 import com.whoisyari.freefallingdetector.FreeFallingSdk
 import com.whoisyari.freefallingdetectorlibrary.data.FreeFallingDatabase
-import com.whoisyari.freefallingdetectorlibrary.data.dao.SensorDataDao
 import com.whoisyari.freefallingdetectorlibrary.data.model.SensorData
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -67,10 +66,18 @@ class SensorDataRepository(val database: FreeFallingDatabase) : CoroutineScope {
     fun getLastFall(): List<SensorData> {
         val lastRecord = getLastRecordWithFallId()
         Log.d(FreeFallingSdk.TAG, "lastID ${lastRecord?.fallId}")
-        return  database.sensorDataDao().getLastFallById(lastRecord?.fallId ?: 0)
+        return  database.sensorDataDao().getFallById(lastRecord?.fallId ?: 0)
     }
 
     fun removeInvalidFall(fallId: Long): Int {
         return database.sensorDataDao().deleteInvalidFallById(fallId)
+    }
+
+    fun getFallIds(): List<Long> {
+        return database.sensorDataDao().getFallIds()
+    }
+
+    fun getFallTrailById(fallId: Long): List<SensorData> {
+        return database.sensorDataDao().getFallById(fallId)
     }
 }

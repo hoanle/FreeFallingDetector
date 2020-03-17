@@ -21,7 +21,10 @@ interface SensorDataDao {
     fun getSensorById(id: Long): SensorData?
 
     @Query("SELECT * FROM SensorData where fallId = :fallId")
-    fun getLastFallById(fallId: Long): List<SensorData>
+    fun getFallById(fallId: Long): List<SensorData>
+
+    @Query("SELECT DISTINCT fallId FROM SensorData")
+    fun getFallIds(): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrUpdateSensorData(data: SensorData) : Long

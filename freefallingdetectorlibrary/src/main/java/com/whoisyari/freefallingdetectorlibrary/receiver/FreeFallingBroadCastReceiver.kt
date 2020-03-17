@@ -42,7 +42,7 @@ internal class FreeFallingBroadCastReceiver : BroadcastReceiver() {
                         .getInstance(context)
                         .sendBroadcastSync(Intent(FreeFallingSdk.BROADCAST_SERVICE_RUNNING));
                 }
-            } else if (FreeFallingSdk.SHOULD_START_SERVICE_FOREGROUND == intent?.action) {
+            } else if (FreeFallingSdk.SHOULD_START_SERVICE_FOREGROUND == intent.action) {
                 context?.apply {
                     FreeFallingServiceUtil.stopMonitoringService(context)
                     FreeFallingServiceUtil.startForegroundService(context)

@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey
  * @param fallId: Id of the falling event
  */
 @Entity
-data class SensorData(
+class SensorData(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") var id: Long = 0,
     @ColumnInfo(name = "sensorX") var sensorX: Float = 0f,

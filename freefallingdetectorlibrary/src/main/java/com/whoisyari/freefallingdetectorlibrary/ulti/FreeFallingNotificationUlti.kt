@@ -43,7 +43,7 @@ internal class FreeFallingNotificationUlti {
             val builder = NotificationCompat.Builder(context, channelId)
             builder.setSmallIcon(R.drawable.ic_launcher_background)
 
-            var launchIntent: Intent? = null
+            var launchIntent: Intent?
             val apppack = FreeFallingPreferenceUtil.getApplicationComponentName(context)
             val pm = context.packageManager
             launchIntent = pm.getLaunchIntentForPackage(apppack)
@@ -110,7 +110,7 @@ internal class FreeFallingNotificationUlti {
             val builder = NotificationCompat.Builder(context, channelId)
             builder.setSmallIcon(R.drawable.ic_launcher_background)
 
-            var launchIntent: Intent? = null
+            var launchIntent: Intent?
             val apppack = FreeFallingPreferenceUtil.getApplicationComponentName(context)
             val pm = context.packageManager
             launchIntent = pm.getLaunchIntentForPackage(apppack)
