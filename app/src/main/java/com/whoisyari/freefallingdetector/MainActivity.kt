@@ -3,14 +3,24 @@ package com.whoisyari.freefallingdetector
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
+import com.whoisyari.freefallingdetectorlibrary.data.model.SensorData
 
 
 class MainActivity : AppCompatActivity() {
 
+    val viewPager: ViewPager by lazy { findViewById<ViewPager>(R.id.vpFalls) }
+    val adapter: FallDetailAdapter by lazy { FallDetailAdapter() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setUpTheSdk()
 
+        viewPager.adapter = adapter
+    }
+
+    private fun setUpTheSdk() {
         Log.d(FreeFallingSdk.TAG, "activity onCreate ${android.os.Process.myPid()}")
         val options = FreeFallingOptions(true)
 
@@ -28,6 +38,23 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun displayTheData() {
+        val repository = FreeFallingSdk.getInstance().getFreeFallRepository(this)
+        val fallIds = repository.getFallIds()
+
+        val allFalls = arrayListOf<List<SensorData>>()
+        for (fallId in fallIds) {
+            allFalls.add(repository.getFallTrailById(fallId))
+        }
+        adapter.setList(allFalls)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        displayTheData()
+    }
+
 
     override fun onStop() {
         super.onStop()
